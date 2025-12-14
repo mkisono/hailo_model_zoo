@@ -13,6 +13,7 @@ RUN git clone https://github.com/hailo-ai/DAMO-YOLO.git && \
     pip install -r requirements.txt
 
 RUN pip install git+https://github.com/cocodataset/cocoapi.git#subdirectory=PythonAPI
+RUN pip install mlflow
 
 ENV PYTHONPATH=/workspace/DAMO-YOLO
 WORKDIR /workspace/DAMO-YOLO

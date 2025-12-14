@@ -1,3 +1,17 @@
+```
+cd training/damoyolo/
+
+docker build --build-arg timezone=`cat /etc/timezone` -t damoyolo:v1 .
+
+docker run --rm -it --gpus all --ipc=host \
+    -v ../../../kifume-model/data:/workspace/DAMO-YOLO/datasets \
+    -v ./configs:/workspace/DAMO-YOLO/configs \
+    -v ./workdirs:/workspace/DAMO-YOLO/workdirs \
+    damoyolo:v1
+
+python -m torch.distributed.launch --nproc_per_node=1 --node_rank=0 tools/train.py -f configs/damoyolo_tinynasL35_M.py
+```
+
 =====================
 DAMO-YOLO Retraining
 =====================
