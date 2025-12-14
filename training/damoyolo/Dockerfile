@@ -21,3 +21,6 @@ RUN cd /workspace/DAMO-YOLO && \
     wget https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ObjectDetection/Detection-COCO/yolo/damoyolo_tinynasL20_T/pretrained/2022-12-19/damoyolo_tinynasL20_T_418.pth -q && \
     wget https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ObjectDetection/Detection-COCO/yolo/damoyolo_tinynasL25_S/pretrained/2022-12-19/damoyolo_tinynasL25_S_456.pth -q && \
     wget https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ObjectDetection/Detection-COCO/yolo/damoyolo_tinynasL35_M/pretrained/2022-12-19/damoyolo_tinynasL35_M_487.pth -q
+
+COPY paths_catalog.py /workspace/DAMO-YOLO/damo/config/paths_catalog.py
+COPY train.py /workspace/DAMO-YOLO/tools/train.py
