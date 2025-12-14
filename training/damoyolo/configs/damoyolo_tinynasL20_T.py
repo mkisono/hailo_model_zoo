@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-import os
+from datetime import datetime
 
 from damo.config import Config as MyConfig
 
@@ -9,12 +9,15 @@ class Config(MyConfig):
     def __init__(self):
         super(Config, self).__init__()
 
-        self.miscs.exp_name = os.path.split(
-            os.path.realpath(__file__))[1].split('.')[0]
+        self.miscs.exp_name = datetime.now().strftime("%Y%m%d_%H%M%S")
         self.miscs.eval_interval_epochs = 10
         self.miscs.ckpt_interval_epochs = 10
+
+        self.train.total_epochs = 100
+        self.train.finetune_path = "damoyolo_tinynasL20_T_418.pth"
+
         # optimizer
-        self.train.batch_size = 256
+        self.train.batch_size = 16
         self.train.base_lr_per_img = 0.01 / 64
         self.train.min_lr_ratio = 0.05
         self.train.weight_decay = 5e-4
@@ -30,8 +33,10 @@ class Config(MyConfig):
         self.train.augment.mosaic_mixup.shear = 0.2
         self.train.augment.mosaic_mixup.mosaic_scale = (0.1, 2.0)
 
-        self.dataset.train_ann = ('coco_2017_train', )
-        self.dataset.val_ann = ('coco_2017_val', )
+        self.test.batch_size = 16
+
+        self.dataset.train_ann = ('coco_train_data', )
+        self.dataset.val_ann = ('coco_test_data', )
 
         # backbone
         structure = self.read_structure(
@@ -63,7 +68,7 @@ class Config(MyConfig):
 
         ZeroHead = {
             'name': 'ZeroHead',
-            'num_classes': 80,
+            'num_classes': 7,
             'in_channels': [64, 128, 256],
             'stacked_convs': 0,
             'reg_max': 16,
@@ -73,4 +78,4 @@ class Config(MyConfig):
         }
         self.model.head = ZeroHead
 
-        self.dataset.class_names = ['person', 'bicycle', 'car', 'motorcycle', 'airplane', 'bus', 'train', 'truck', 'boat', 'traffic light', 'fire hydrant', 'stop sign', 'parking meter', 'bench', 'bird', 'cat', 'dog', 'horse', 'sheep', 'cow', 'elephant', 'bear', 'zebra', 'giraffe', 'backpack', 'umbrella', 'handbag', 'tie', 'suitcase', 'frisbee', 'skis', 'snowboard', 'sports ball', 'kite', 'baseball bat', 'baseball glove', 'skateboard', 'surfboard', 'tennis racket', 'bottle', 'wine glass', 'cup', 'fork', 'knife', 'spoon', 'bowl', 'banana', 'apple', 'sandwich', 'orange', 'broccoli', 'carrot', 'hot dog', 'pizza', 'donut', 'cake', 'chair', 'couch', 'potted plant', 'bed', 'dining table', 'toilet', 'tv', 'laptop', 'mouse', 'remote', 'keyboard', 'cell phone', 'microwave', 'oven', 'toaster', 'sink', 'refrigerator', 'book', 'clock', 'vase', 'scissors', 'teddy bear', 'hair drier', 'toothbrush']
+        self.dataset.class_names = ["Board", "Checker", "Checker (bear off)", "ChessClock", "Cube", "Dice", "ScoreBoard"]
