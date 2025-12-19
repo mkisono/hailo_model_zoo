@@ -7,9 +7,12 @@ docker run --rm -it --gpus all --ipc=host \
     -v ../../../kifume-model/data:/workspace/DAMO-YOLO/datasets \
     -v ./configs:/workspace/DAMO-YOLO/configs \
     -v ./workdirs:/workspace/DAMO-YOLO/workdirs \
+    -v ./outputs:/workspace/DAMO-YOLO/outputs \
     damoyolo:v1
 
 python -m torch.distributed.launch --nproc_per_node=1 --node_rank=0 tools/train.py -f configs/damoyolo_tinynasL35_M.py
+
+python tools/converter.py -f configs/damoyolo_tinynasL35_M.py -c workdirs/<folder>/epoch_70_ckpt.pth --batch_size 1 --img_size 640
 ```
 
 =====================
