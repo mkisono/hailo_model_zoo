@@ -10,30 +10,30 @@ class Config(MyConfig):
         super(Config, self).__init__()
 
         self.miscs.exp_name = datetime.now().strftime("%Y%m%d_%H%M%S")
-        self.miscs.eval_interval_epochs = 10
-        self.miscs.ckpt_interval_epochs = 10
+        self.miscs.eval_interval_epochs = 3
+        self.miscs.ckpt_interval_epochs = 5
 
-        self.train.total_epochs = 100
+        self.train.total_epochs = 70
         self.train.finetune_path = "damoyolo_tinynasL20_T_418.pth"
 
         # optimizer
-        self.train.batch_size = 16
-        self.train.base_lr_per_img = 0.01 / 64
+        self.train.batch_size = 32
+        self.train.base_lr_per_img = 0.015 / 64
         self.train.min_lr_ratio = 0.05
         self.train.weight_decay = 5e-4
         self.train.momentum = 0.9
-        self.train.no_aug_epochs = 16
+        self.train.no_aug_epochs = 10
         self.train.warmup_epochs = 5
 
         # augment
         self.train.augment.transform.image_max_range = (640, 640)
-        self.train.augment.mosaic_mixup.mixup_prob = 0.15
-        self.train.augment.mosaic_mixup.degrees = 10.0
-        self.train.augment.mosaic_mixup.translate = 0.2
-        self.train.augment.mosaic_mixup.shear = 0.2
+        self.train.augment.mosaic_mixup.mixup_prob = 0.5
+        self.train.augment.mosaic_mixup.degrees = 15.0
+        self.train.augment.mosaic_mixup.translate = 0.3
+        self.train.augment.mosaic_mixup.shear = 2.0
         self.train.augment.mosaic_mixup.mosaic_scale = (0.1, 2.0)
 
-        self.test.batch_size = 16
+        self.test.batch_size = 32
 
         self.dataset.train_ann = ('coco_train_data', )
         self.dataset.val_ann = ('coco_test_data', )
